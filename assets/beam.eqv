@@ -1,0 +1,125 @@
+format: equavela-worksheet/3
+page:
+  size: A4
+  margins: {top: 72, right: 54, bottom: 72, left: 54}
+settings:
+  format.precision: 3
+regions:
+  - id: t1
+    page: 1
+    at: [54, 72]
+    text: Simply supported beam under a uniform load
+  - id: t2
+    page: 1
+    at: [54, 96]
+    text: The beam spans L. The load q acts over the whole span. The worksheet shows units and result formats.
+  - id: m1
+    page: 1
+    at: [54, 150]
+    math: "L := 3.5 m@unit"
+  - id: m2
+    page: 1
+    at: [54, 180]
+    math: "q := 12 kN@unit/m@unit"
+  - id: m3
+    page: 1
+    at: [54, 210]
+    math: "M_max := q·L^2/8"
+  - id: m4
+    page: 1
+    at: [260, 210]
+    math: "M_max = … kN·m"
+  - id: m5
+    page: 1
+    at: [54, 250]
+    math: "A := [1, 2, 3; 4, 5, 6; 7, 8, 10]"
+  - id: m6
+    page: 1
+    at: [260, 250]
+    math: "A ="
+  - id: m7
+    page: 1
+    at: [54, 320]
+    math: '\det(A) ='
+  - id: m8
+    page: 1
+    at: [54, 350]
+    math: "k ≡ 2.5"
+  - id: m9
+    page: 1
+    at: [54, 390]
+    math: |
+      S(n) := program
+        s ← 0
+        for i ∈ 1..n
+          if i > 3
+            s ← s + i^k
+          else
+            s ← s + i
+        s
+  - id: m10
+    page: 1
+    at: [54, 520]
+    math: "S(10) ="
+  - id: m11
+    page: 1
+    at: [54, 560]
+    math: "f(x) := x^2·sin(x)"
+  - id: m12
+    page: 1
+    at: [54, 590]
+    math: "ⅆ[x] f(x) →"
+  - id: m13
+    page: 1
+    at: [54, 636]
+    math: "∑[n ∈ 1..10] 1/n^2 ="
+  - id: m14
+    page: 1
+    at: [54, 695]
+    math: "∫[x ∈ 0..1] x^2 ="
+  - id: m15
+    page: 1
+    at: [54, 740]
+    math: "2 + 2 == 4"
+  - id: m16
+    page: 2
+    at: [54, 72]
+    math: "w := missing + 1"
+  - id: m17
+    page: 2
+    at: [54, 102]
+    math: "w ="
+  - id: m18
+    page: 2
+    at: [54, 140]
+    math: "v := 0, 0.5..2"
+  - id: m19
+    page: 2
+    at: [54, 170]
+    math: "z := 3 + 4i"
+  - id: m20
+    page: 2
+    at: [260, 170]
+    math: "z ="
+  - id: m21
+    page: 2
+    at: [54, 210]
+    math: "B := identity(15)"
+  - id: m22
+    page: 2
+    at: [54, 240]
+    math: "B ="
+    format:
+      format.matrix-display: table
+  - id: inc1
+    page: 2
+    at: [54, 470]
+    include: libs/helpers.eqv
+  - id: j1
+    page: 2
+    at: [54, 520]
+    julia:
+      using: [LinearAlgebra]
+      define: [spectral]
+      code: |
+        spectral(M) = maximum(abs.(eigvals(M)))
