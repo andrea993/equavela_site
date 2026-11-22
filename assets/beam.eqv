@@ -11,61 +11,94 @@ regions:
     text: "BEAM DESIGN | Uniformly distributed load"
   - id: t2
     page: 1
-    at: [54, 108]
-    text: "A simply supported beam carries a uniform load across its full span. This worksheet estimates the maximum bending moment and checks the resulting elastic bending stress."
+    at: [54, 104]
+    text: "A simply supported beam carries a uniform load. We calculate the peak bending moment and check the elastic bending stress against an allowable value."
   - id: t3
     page: 1
-    at: [54, 160]
-    text: "1. Inputs — span, line load and elastic section modulus"
+    at: [54, 158]
+    text: "Inputs — span, line load and section modulus"
   - id: m1
     page: 1
-    at: [54, 195]
+    at: [54, 190]
     math: "L := 3.5 m@unit"
   - id: m2
     page: 1
-    at: [205, 195]
+    at: [200, 190]
     math: "q := 12 kN@unit/m@unit"
   - id: m3
     page: 1
-    at: [395, 195]
+    at: [390, 190]
     math: "W := 150 cm@unit^3"
   - id: t4
     page: 1
-    at: [54, 250]
-    text: "2. Maximum moment — for a simply supported beam under a uniform load, the peak occurs at midspan."
+    at: [54, 236]
+    text: "Peak bending moment and stress"
   - id: m4
     page: 1
-    at: [54, 305]
+    at: [54, 265]
     math: "M_max := q·L^2/8"
   - id: m5
     page: 1
-    at: [265, 305]
+    at: [250, 265]
     math: "M_max = … kN·m"
-  - id: t5
-    page: 1
-    at: [54, 360]
-    text: "3. Elastic bending stress — divide the maximum moment by the section modulus."
   - id: m6
     page: 1
-    at: [54, 412]
+    at: [54, 305]
     math: "σ_max := M_max/W"
   - id: m7
     page: 1
-    at: [265, 412]
+    at: [250, 305]
     math: "σ_max = … MPa"
+  - id: t5
+    page: 1
+    at: [54, 357]
+    text: "Moment along the span"
+  - id: px
+    page: 1
+    at: [54, 385]
+    math: "x := 0, 0.1..3.5"
+  - id: pm
+    page: 1
+    at: [54, 416]
+    math: "M(x) := 12·x·(3.5 − x)/2"
+  - id: plot
+    page: 1
+    at: [54, 455]
+    plot:
+      version: 1
+      type: xy
+      size: [220, 120]
+      axes:
+        x: {title: "Position (m)"}
+        y: {title: "Moment (kN·m)"}
+      traces:
+        - {id: moment, x: "x", y: "M(x)"}
   - id: t6
     page: 1
-    at: [54, 470]
-    text: "4. Interpretation — compare the calculated stress with an allowable value of 160 MPa."
+    at: [305, 357]
+    text: "Stress utilisation"
   - id: m8
     page: 1
-    at: [54, 523]
+    at: [305, 385]
     math: "σ_allow := 160 MPa@unit"
   - id: m9
     page: 1
-    at: [265, 523]
-    math: "σ_max/σ_allow ="
+    at: [305, 415]
+    math: "u := σ_max/σ_allow"
+  - id: m10
+    page: 1
+    at: [305, 445]
+    math: |
+      check(u) := program
+        if u ≤ 1
+          "Pass"
+        else
+          "Review"
+  - id: m11
+    page: 1
+    at: [305, 540]
+    math: "check(u) ="
   - id: t7
     page: 1
-    at: [54, 580]
-    text: "The ratio is below 1.0, so the assumed section satisfies this illustrative bending-stress check. Deflection, shear and stability require separate checks."
+    at: [54, 605]
+    text: "The bending check passes when utilisation is at most 1. Deflection, shear and stability require separate checks."
