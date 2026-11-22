@@ -1,7 +1,181 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Equavela is a scientific computing workspace for live engineering worksheets, powered by Julia."><title>Equavela — Scientific computing workspace</title><link rel="icon" href="assets/equavela-mark.svg"><link rel="stylesheet" href="style.css"></head>
-<body><header><a class="brand" href="#top"><img src="assets/equavela-logo.svg" alt="Equavela"></a><nav><a href="#workspace">Workspace</a><a href="#examples">Examples</a><a href="#documentation">Documentation</a></nav></header>
-<main id="top"><section class="hero"><div><p class="eyebrow">Scientific computing workspace</p><h1>Work through ideas.<br><span>See the whole calculation.</span></h1><p class="lead">Equavela brings live mathematics, explanatory text and visualizations together in an engineering worksheet, powered by Julia.</p><a class="button" href="#workspace">Explore the workspace <span aria-hidden="true">↗</span></a><p class="note">Equavela is under active development.</p></div><div class="hero-card"><img src="assets/worksheet-example.png" alt="An Equavela worksheet documenting a beam calculation with explanatory text, a moment plot and a conditional stress check"><p>A documented beam calculation with a moment plot and an algorithmic stress check.</p></div></section>
-<section id="workspace" class="section"><p class="eyebrow">The workspace</p><h2>Calculations with context.</h2><p class="intro">Build a worksheet that tells the story of your work, from definitions and units to results, plots and explanations.</p><div class="features"><article><h3>Live mathematics</h3><p>Write expressions, define variables and functions, and see results update as your worksheet changes.</p></article><article><h3>Units and arrays</h3><p>Work with physical units, matrices and vectors alongside your calculations.</p></article><article><h3>Julia and symbolics</h3><p>Use Julia in your worksheets and explore symbolic operations with SymPy.</p></article><article><h3>Visual explanations</h3><p>Combine math, text, plots, tables and images in a document ready to share.</p></article></div></section>
-<section id="examples" class="section examples"><div><p class="eyebrow">Worksheet examples</p><h2>From equations to engineering.</h2><p class="intro">Explore a sample worksheet and see how Equavela keeps the assumptions and calculations together.</p></div><article class="example"><div class="formula"><span>Uniformly loaded beam</span><strong>M<sub>max</sub> = q · L² / 8</strong><small>Length · load · bending moment</small></div><div><h3>Simply supported beam</h3><p>Define a span and a distributed load with units, then calculate the maximum bending moment. The worksheet explains its assumptions, plots the moment along the span and uses a conditional program to check the bending stress.</p><a href="assets/beam.eqv" download>Download the example worksheet ↓</a></div></article><div class="ideas"><article><h3>Explore a system</h3><p>Arrange definitions and equations in reading order, then evaluate the quantities that matter.</p></article><article><h3>Explain a result</h3><p>Place text and plots next to the mathematics to make the reasoning easy to follow.</p></article><article><h3>Extend with Julia</h3><p>Bring numerical code and worksheet calculations into the same project.</p></article></div></section>
-<section id="documentation" class="section docs"><div><p class="eyebrow">Learn the workspace</p><h2>Guidance close at hand.</h2><p class="intro">The built-in manual covers the workspace, mathematical editing, units, functions, projects and more.</p></div><img src="assets/manual-window.png" alt="The Equavela manual showing its chapter navigation and search"></section></main><footer><img src="assets/equavela-mark.svg" alt=""><span>Equavela · Scientific computing workspace</span><span>Under active development</span></footer></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Equavela is a scientific computing workspace: live mathematics, units, symbolic algebra, plots and Julia on a printable page.">
+<title>Equavela — Scientific computing workspace</title>
+<link rel="icon" href="assets/equavela-mark.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><a class="brand" href="#top"><img src="assets/equavela-logo.svg" alt="Equavela"></a><nav><a href="#features">Features</a><a href="#examples">Examples</a><a href="#projects">Projects</a><a href="#documentation">Documentation</a><a href="https://github.com/andrea993/Equavela">GitHub</a></nav></header>
+<main id="top">
+
+<section class="hero">
+  <div>
+    <p class="eyebrow">Scientific computing workspace</p>
+    <h1>Write the mathematics.<br><span>Equavela does the rest.</span></h1>
+    <p class="lead">Definitions, units, symbolic algebra, programs, plots and explanatory text on one live page, with Julia underneath. What you see on screen is exactly what you print.</p>
+    <a class="button" href="#examples">See the examples <span aria-hidden="true">↓</span></a>
+    <a class="button ghost" href="https://github.com/andrea993/Equavela/releases">Download for Windows and Linux</a>
+    <p class="note">Free and open source (MPL-2.0) · version 0.1 alpha, under active development.</p>
+  </div>
+  <figure class="hero-card"><a href="assets/shots/lotka-volterra-2.webp"><img src="assets/shots/lotka-volterra-2.webp" alt="Equavela in project mode: a predator–prey worksheet with a Julia block, results and two plots"></a><figcaption>A predator–prey model in project mode: a Julia block, live results and plots on the same page.</figcaption></figure>
+</section>
+
+<section id="features" class="section">
+  <p class="eyebrow">What it does</p>
+  <h2>Everything a calculation needs, on one page.</h2>
+  <p class="intro">Place mathematics, text, plots and images anywhere on the page. Every result recalculates as soon as something it depends on changes.</p>
+  <div class="features">
+    <article><h3>Live mathematics</h3><p>Write <math><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>:=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi></math> as you would on paper. Definitions, functions, ranges, vectors and matrices update the whole page in reading order.</p></article>
+    <article><h3>Units everywhere</h3><p>Quantities carry their units through every step: <math><mn>1</mn><mspace width=".2em"/><mi mathvariant="normal">kΩ</mi></math> and <math><mn>100</mn><mspace width=".2em"/><mi mathvariant="normal">nF</mi></math> give a cut-off of <math><mn>1.5915</mn><mspace width=".2em"/><mi mathvariant="normal">kHz</mi></math>, and wrong dimensions are caught.</p></article>
+    <article><h3>Symbolic algebra</h3><p>The symbolic arrow <math><mo>→</mo></math> simplifies, differentiates and integrates exactly, with assumptions such as an integer <math><mi>n</mi><mo>&gt;</mo><mn>0</mn></math>. Powered by SymPy.</p></article>
+    <article><h3>Programs</h3><p>Loops, conditions and local variables inside an expression, for algorithms that are clearer as a small program than as a formula.</p></article>
+    <article><h3>Plots</h3><p>Line and marker traces, logarithmic axes, reference lines, legends and axis titles, all from the worksheet's own expressions.</p></article>
+    <article><h3>Solvers and numerics</h3><p>Differential equations, root finding, integrals, sums, statistics and linear algebra, running on Julia.</p></article>
+    <article><h3>Julia when you want it</h3><p>Write Julia blocks next to your mathematics, call any Julia package, or keep your own modules in a project.</p></article>
+    <article><h3>Print what you see</h3><p>Pages are laid out in points with bundled fonts, so the PDF looks exactly like the screen.</p></article>
+  </div>
+</section>
+
+<section id="examples" class="section examples">
+  <p class="eyebrow">Examples</p>
+  <h2>From pure mathematics to physics.</h2>
+  <p class="intro">Real worksheets in the real application. Scroll through each one, or download the whole example project and open it in Equavela.</p>
+
+  <article class="example">
+    <div class="example-text">
+      <p class="field">Mathematical analysis</p>
+      <h3>Fourier series and the Gibbs phenomenon</h3>
+      <p>A square wave of period <math><mn>2</mn><mi>π</mi></math> is rebuilt from its Fourier series. The coefficient <math><mfrac><mn>2</mn><mi>π</mi></mfrac><msubsup><mo>∫</mo><mn>0</mn><mi>π</mi></msubsup><mi>sin</mi><mo>(</mo><mi>n</mi><mi>x</mi><mo>)</mo><mspace width=".15em"/><mi>d</mi><mi>x</mi></math> is solved symbolically for an integer <math><mi>n</mi></math>, and the partial sums are plotted against the wave.</p>
+      <p>Next to the jump the sums overshoot by about <math><mn>9</mn><mo>%</mo></math> whatever the number of terms: <math><mi>G</mi><mo>(</mo><mn>1000</mn><mo>)</mo><mo>=</mo><mn>1.17898</mn></math>, the sine-integral limit.</p>
+      <ul class="tags"><li>symbolic integral with assumptions</li><li>sums</li><li>multi-trace plot</li></ul>
+      <a href="assets/examples/worksheets/fourier-gibbs.eqv" download>Download the worksheet ↓</a>
+    </div>
+    <div class="gallery" aria-label="Fourier series worksheet">
+      <div class="slides">
+        <a href="assets/shots/fourier-gibbs-1.webp"><img loading="lazy" src="assets/shots/fourier-gibbs-1.webp" alt="Symbolic Fourier coefficient and the partial sums plotted against the square wave"></a>
+        <a href="assets/shots/fourier-gibbs-2.webp"><img loading="lazy" src="assets/shots/fourier-gibbs-2.webp" alt="The overshoot computed for 10, 100 and 1000 terms and its limit"></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="example">
+    <div class="example-text">
+      <p class="field">Classical mechanics</p>
+      <h3>A damped harmonic oscillator</h3>
+      <p>A mass of <math><mn>1</mn><mspace width=".2em"/><mi mathvariant="normal">kg</mi></math> on a spring of <math><mn>40</mn><mspace width=".2em"/><mi mathvariant="normal">N/m</mi></math> with viscous damping. Natural frequency and damping ratio come out with their units; a Runge–Kutta solver integrates <math><mi>m</mi><mi>x</mi><mo>″</mo><mo>+</mo><mi>c</mi><mi>x</mi><mo>′</mo><mo>+</mo><mi>k</mi><mi>x</mi><mo>=</mo><mn>0</mn></math> in <math><mn>1000</mn></math> steps.</p>
+      <p>The numerical solution matches the exact one to <math><mn>5.2</mn><mo>·</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>7</mn></mrow></msup></math>, and the energy plot shows where the motion goes.</p>
+      <ul class="tags"><li>units</li><li>differential equations</li><li>vectorised expressions</li></ul>
+      <a href="assets/examples/worksheets/damped-oscillator.eqv" download>Download the worksheet ↓</a>
+    </div>
+    <div class="gallery" aria-label="Damped oscillator worksheet">
+      <div class="slides">
+        <a href="assets/shots/damped-oscillator-1.webp"><img loading="lazy" src="assets/shots/damped-oscillator-1.webp" alt="Model parameters with units, natural frequency and damping ratio"></a>
+        <a href="assets/shots/damped-oscillator-2.webp"><img loading="lazy" src="assets/shots/damped-oscillator-2.webp" alt="Runge–Kutta solution, error against the exact solution, displacement and energy plots"></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="example">
+    <div class="example-text">
+      <p class="field">Electronics</p>
+      <h3>Frequency response of an RC filter</h3>
+      <p>A resistor and a capacitor make the simplest low-pass filter. Its complex transfer function <math><mi>H</mi><mo>(</mo><mi>f</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><mn>2</mn><mi>π</mi><mi>f</mi><mi>τ</mi><mi>j</mi></mrow></mfrac></math> gives the gain in decibels and the phase in degrees.</p>
+      <p>At the cut-off the gain is <math><mo>−</mo><mn>3</mn><mspace width=".2em"/><mi mathvariant="normal">dB</mi></math> and the phase <math><mo>−</mo><msup><mn>45</mn><mo>°</mo></msup></math>, drawn as a Bode plot on logarithmic axes.</p>
+      <ul class="tags"><li>complex numbers</li><li>units</li><li>logarithmic plots</li></ul>
+      <a href="assets/examples/worksheets/rc-filter.eqv" download>Download the worksheet ↓</a>
+    </div>
+    <div class="gallery" aria-label="RC filter worksheet">
+      <div class="slides">
+        <a href="assets/shots/rc-filter-1.webp"><img loading="lazy" src="assets/shots/rc-filter-1.webp" alt="Components with units, cut-off frequency and transfer function"></a>
+        <a href="assets/shots/rc-filter-2.webp"><img loading="lazy" src="assets/shots/rc-filter-2.webp" alt="Bode plot of gain and phase with reference lines at the cut-off"></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="example">
+    <div class="example-text">
+      <p class="field">Numerical analysis</p>
+      <h3>Newton's method</h3>
+      <p>Newton's own example, <math><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>5</mn><mo>=</mo><mn>0</mn></math>, solved by a small program. The derivative is found symbolically, and the iteration collects every estimate in a vector.</p>
+      <p>The errors fall faster and faster: the ratio <math><mfrac><msub><mi>e</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><msubsup><mi>e</mi><mi>k</mi><mn>2</mn></msubsup></mfrac></math> settles near <math><mn>0.563</mn></math>, the mark of quadratic convergence.</p>
+      <ul class="tags"><li>programs</li><li>symbolic derivative</li><li>logarithmic plot</li></ul>
+      <a href="assets/examples/worksheets/Newton-method.eqv" download>Download the worksheet ↓</a>
+    </div>
+    <div class="gallery" aria-label="Newton's method worksheet">
+      <div class="slides">
+        <a href="assets/shots/newton-method-1.webp"><img loading="lazy" src="assets/shots/newton-method-1.webp" alt="The equation, its symbolic derivative and the Newton iteration as a program"></a>
+        <a href="assets/shots/newton-method-2.webp"><img loading="lazy" src="assets/shots/newton-method-2.webp" alt="The iterates, the error ratios and the error plot on a logarithmic axis"></a>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section id="projects" class="section examples">
+  <p class="eyebrow">Projects and Julia</p>
+  <h2>When a page is not enough.</h2>
+  <p class="intro">A project keeps worksheets, data, images and Julia code together, with its own Julia environment. The explorer shows it all, and <code>.jl</code> files open in the built-in code editor.</p>
+
+  <article class="example">
+    <div class="example-text">
+      <p class="field">Population dynamics</p>
+      <h3>Predators and prey</h3>
+      <p>The Lotka–Volterra equations with <math><mi>α</mi><mo>=</mo><mn>1.1</mn></math>, <math><mi>β</mi><mo>=</mo><mn>0.4</mn></math>, <math><mi>δ</mi><mo>=</mo><mn>0.1</mn></math> and <math><mi>γ</mi><mo>=</mo><mn>0.4</mn></math>. The project's Julia module <code>PredatorPrey</code> holds a Runge–Kutta solver; a Julia block in the worksheet uses it to define a function that the mathematics then calls like any other.</p>
+      <p>Both populations cycle around the equilibrium <math><mo>(</mo><mn>4</mn><mo>,</mo><mn>2.75</mn><mo>)</mo></math>, and the conserved quantity drifts by only <math><mn>3.6</mn><mo>·</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>10</mn></mrow></msup></math> over the run.</p>
+      <ul class="tags"><li>project mode</li><li>Julia module</li><li>Julia block</li><li>phase portrait</li></ul>
+      <a href="assets/examples.zip" download>Download the example project ↓</a>
+    </div>
+    <div class="gallery" aria-label="Predator–prey project">
+      <div class="slides">
+        <a href="assets/shots/lotka-volterra-1.webp"><img loading="lazy" src="assets/shots/lotka-volterra-1.webp" alt="The predator–prey worksheet in project mode with the project explorer"></a>
+        <a href="assets/shots/lotka-volterra-2.webp"><img loading="lazy" src="assets/shots/lotka-volterra-2.webp" alt="A Julia block defines a function used by the worksheet; population and phase plots"></a>
+        <a href="assets/shots/lotka-volterra-3.webp"><img loading="lazy" src="assets/shots/lotka-volterra-3.webp" alt="The project's Julia module open in the built-in code editor"></a>
+      </div>
+    </div>
+  </article>
+
+  <div class="ideas">
+    <article><h3>Julia packages</h3><p>Call a function of any Julia package straight from the mathematics; values cross between the page and Julia through a checked conversion layer.</p></article>
+    <article><h3>Readable files</h3><p>Worksheets are plain YAML with the mathematics as linear text, easy to read, compare and keep under version control.</p></article>
+    <article><h3>Bring your Mathcad files</h3><p>Import Mathcad worksheets, both <code>.mcdx</code> and <code>.xmcd</code>, as new Equavela worksheets, with a report of what was converted.</p></article>
+  </div>
+</section>
+
+<section id="documentation" class="section docs">
+  <div>
+    <p class="eyebrow">Learn the workspace</p>
+    <h2>Guidance close at hand.</h2>
+    <p class="intro">The built-in manual covers the window, mathematical editing, units, functions, programs, plots, projects and Julia, with every built-in function documented and searchable.</p>
+    <p class="intro">Equavela runs on Windows and Linux. The source code is on <a href="https://github.com/andrea993/Equavela">GitHub</a>.</p>
+  </div>
+  <img src="assets/manual-window.png" alt="The Equavela manual showing its chapter navigation and search">
+</section>
+</main>
+<footer><img src="assets/equavela-mark.svg" alt=""><span>Equavela · Scientific computing workspace</span><a href="https://github.com/andrea993/Equavela">GitHub</a><span>MPL-2.0 · under active development</span></footer>
+<script>
+for (const gallery of document.querySelectorAll('.gallery')) {
+  const slides = gallery.querySelector('.slides');
+  const count = slides.children.length;
+  if (count < 2) continue;
+  const bar = document.createElement('div');
+  bar.className = 'gallery-bar';
+  const prev = Object.assign(document.createElement('button'), { type: 'button', textContent: '‹', ariaLabel: 'Previous picture' });
+  const next = Object.assign(document.createElement('button'), { type: 'button', textContent: '›', ariaLabel: 'Next picture' });
+  const dots = [...slides.children].map((_, i) => Object.assign(document.createElement('button'), { type: 'button', className: 'dot', ariaLabel: `Picture ${i + 1} of ${count}` }));
+  const current = () => Math.round(slides.scrollLeft / slides.clientWidth);
+  const go = (i) => slides.scrollTo({ left: Math.max(0, Math.min(count - 1, i)) * slides.clientWidth, behavior: 'smooth' });
+  prev.onclick = () => go(current() - 1);
+  next.onclick = () => go(current() + 1);
+  dots.forEach((dot, i) => { dot.onclick = () => go(i); });
+  const mark = () => dots.forEach((dot, i) => dot.classList.toggle('on', i === current()));
+  slides.addEventListener('scroll', mark, { passive: true });
+  bar.append(prev, ...dots, next);
+  gallery.append(bar);
+  mark();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+format: equavela-project/1
+project_id: 9bd372e2-9b5c-4f64-a061-a5f297d8d6e4
+name: Examples
+worksheets:
+  - id: 169ed5ce-034e-42ee-b749-e9b99f127ce4
+    path: worksheets/fourier-gibbs.eqv
+  - id: 3d3b9850-9e7e-4a13-b26a-d3049db5adb2
+    path: worksheets/damped-oscillator.eqv
+  - id: 8f75e07f-948a-43d1-9da1-bb600db920dc
+    path: worksheets/rc-filter.eqv
+  - id: f19a8220-02d3-498e-add3-02d91ebd5bf7
+    path: worksheets/Newton-method.eqv
+  - id: ae844637-46cb-46aa-abce-b5bee266f502
+    path: worksheets/Lotka-Volterra.eqv
+main_worksheet: 169ed5ce-034e-42ee-b749-e9b99f127ce4
+environment: julia

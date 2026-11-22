@@ -1,0 +1,157 @@
+format: equavela-worksheet/3
+page:
+  size: A4
+  margins: {top: 54, right: 54, bottom: 54, left: 54}
+settings:
+  format.precision: 4
+regions:
+  - id: title
+    page: 1
+    at: [54, 54]
+    text:
+      width: full
+      text: |
+        {style=title}A damped harmonic oscillator
+
+        A mass on a spring loses energy to viscous friction. Its equation of motion is solved numerically with a Runge–Kutta method and checked against the exact solution; the mechanical energy shows where the motion goes.
+  - id: h1
+    page: 1
+    at: [54, 160]
+    text: "{style=heading1}Model"
+  - id: t1
+    page: 1
+    at: [54, 186]
+    text:
+      width: full
+      text: With mass $m$, stiffness $k$ and damping coefficient $c$, the displacement obeys $m·x'' + c·x' + k·x == 0$. The natural frequency and the damping ratio decide the kind of motion; with $ζ < 1$ it oscillates.
+  - id: m
+    page: 1
+    at: [54, 228]
+    math: "m := 1 kg@unit"
+  - id: k
+    page: 1
+    at: [170, 228]
+    math: "k := 40 N@unit/m@unit"
+  - id: c
+    page: 1
+    at: [310, 228]
+    math: "c := 1.2 N@unit·s@unit/m@unit"
+  - id: w0
+    page: 1
+    at: [54, 262]
+    math: "ω_0 := √(k/m)"
+  - id: w0v
+    page: 1
+    at: [170, 262]
+    math: "ω_0 = … rad/s"
+  - id: z
+    page: 1
+    at: [310, 262]
+    math: "ζ := c/(2·√(k·m))"
+  - id: zv
+    page: 1
+    at: [430, 262]
+    math: "ζ = "
+  - id: wd
+    page: 1
+    at: [54, 296]
+    math: "ω_d := ω_0·√(1 − ζ^2)"
+  - id: wdv
+    page: 1
+    at: [210, 296]
+    math: "ω_d = … rad/s"
+  - id: h2
+    page: 1
+    at: [54, 334]
+    text: "{style=heading1}Numerical solution"
+  - id: t2
+    page: 1
+    at: [54, 360]
+    text:
+      width: full
+      text: The solver works on plain numbers, so the model is written per unit mass, with the rates in $1/s$. The state is the vector of position and velocity; a fixed-step Runge–Kutta method advances it over $10$ seconds in $1000$ steps.
+  - id: g
+    page: 1
+    at: [54, 404]
+    math: "γ := c/m·s@unit"
+  - id: kk
+    page: 1
+    at: [170, 404]
+    math: "κ := k/m·s@unit^2"
+  - id: D
+    page: 1
+    at: [300, 404]
+    math: "D(t, X) := [X[1]; −γ·X[1] − κ·X[0]]"
+  - id: sol
+    page: 1
+    at: [54, 440]
+    math: "Z := rkfixed([1; 0], 0, 10, 1000, D)"
+  - id: cols
+    page: 1
+    at: [300, 440]
+    math: "t := Z⟨0⟩"
+  - id: cols2
+    page: 1
+    at: [380, 440]
+    math: "x := Z⟨1⟩"
+  - id: cols3
+    page: 1
+    at: [460, 440]
+    math: "v := Z⟨2⟩"
+  - id: t3
+    page: 1
+    at: [54, 472]
+    text:
+      width: full
+      text: Released from rest at a displacement of $1$, the exact solution is a decaying cosine, bounded by the envelope $e^(−λ·t)$. The largest gap between it and the numerical solution measures the solver's error.
+  - id: lam
+    page: 1
+    at: [54, 510]
+    math: "λ := ζ·ω_0·s@unit"
+  - id: nu
+    page: 1
+    at: [170, 510]
+    math: "ν := ω_d·s@unit"
+  - id: xa
+    page: 1
+    at: [280, 510]
+    math: "x_a(τ) := e^(−λ·τ)·(cos(ν·τ) + λ/ν·sin(ν·τ))"
+  - id: err
+    page: 1
+    at: [54, 544]
+    math: "max(\\vec(|x − x_a(t)|)) = "
+  - id: E
+    page: 1
+    at: [300, 544]
+    math: "E := \\vec((v^2 + κ·x^2)/2)"
+  - id: plot
+    page: 1
+    at: [54, 576]
+    plot:
+      version: 1
+      type: xy
+      size: [238, 175]
+      axes:
+        x: {title: "Time in s"}
+        y: {title: "Displacement in m"}
+      traces:
+        - {id: x, x: "t", y: "x", show_in_legend: true, legend_label: "numerical", line: {color: "#00428D"}}
+        - {id: env, x: "t", y: "\\vec(e^(−λ·t))", show_in_legend: true, legend_label: "envelope", line: {color: "#01B5AF", style: dash}}
+  - id: plotE
+    page: 1
+    at: [303, 576]
+    plot:
+      version: 1
+      type: xy
+      size: [238, 175]
+      axes:
+        x: {title: "Time in s"}
+        y: {title: "Energy in J/kg"}
+      traces:
+        - {id: e, x: "t", y: "E", show_in_legend: false, line: {color: "#C0392B"}}
+  - id: t4
+    page: 1
+    at: [54, 752]
+    text:
+      width: full
+      text: The energy falls in steps, fastest when the mass moves fastest, because friction dissipates power $c·v^2$; at the turning points the velocity is zero and the energy stays flat for a moment.

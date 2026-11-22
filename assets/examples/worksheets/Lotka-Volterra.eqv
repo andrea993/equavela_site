@@ -1,0 +1,149 @@
+format: equavela-worksheet/3
+page:
+  size: A4
+  margins: {top: 54, right: 54, bottom: 54, left: 54}
+settings:
+  format.precision: 4
+regions:
+  - id: title
+    page: 1
+    at: [54, 54]
+    text:
+      width: full
+      text: |
+        {style=title}Predators and prey
+
+        Hares and lynxes, sardines and sharks: two species, one eating the other. The Lotka–Volterra equations describe how both populations rise and fall in a never-ending cycle. The solver lives in the project's Julia module; the worksheet only calls it.
+  - id: h1
+    page: 1
+    at: [54, 172]
+    text: "{style=heading1}The model"
+  - id: t1
+    page: 1
+    at: [54, 198]
+    text:
+      width: full
+      text: Prey $x$ grow at rate $α$ and are eaten at rate $β·x·y$; predators $y$ grow by eating, at rate $δ·x·y$, and die at rate $γ$.
+  - id: a
+    page: 1
+    at: [54, 232]
+    math: "α := 1.1"
+  - id: b
+    page: 1
+    at: [150, 232]
+    math: "β := 0.4"
+  - id: d
+    page: 1
+    at: [246, 232]
+    math: "δ := 0.1"
+  - id: g
+    page: 1
+    at: [342, 232]
+    math: "γ := 0.4"
+  - id: h2
+    page: 1
+    at: [54, 272]
+    text: "{style=heading1}A Julia block"
+  - id: t2
+    page: 1
+    at: [54, 298]
+    text:
+      width: full
+      text: The block below uses the Runge–Kutta solver of the module **PredatorPrey** in julia/src and defines a function that the worksheet then calls like any other.
+  - id: jl
+    page: 1
+    at: [54, 332]
+    julia:
+      using: [PredatorPrey]
+      define: [orbit]
+      code: |
+        orbit(α, β, δ, γ, x0, y0, T) =
+            rk4(u -> lotka_volterra(u, (; α, β, δ, γ)), [x0, y0], T, 4000)
+  - id: orb
+    page: 1
+    at: [54, 400]
+    math: "orbit(a, b, d, g, x_0, y_0, T) := julia.orbit"
+  - id: Z
+    page: 1
+    at: [54, 434]
+    math: "Z := orbit(α, β, δ, γ, 10, 5, 40)"
+  - id: t
+    page: 1
+    at: [300, 434]
+    math: "t := Z⟨0⟩"
+  - id: x
+    page: 1
+    at: [380, 434]
+    math: "x := Z⟨1⟩"
+  - id: y
+    page: 1
+    at: [460, 434]
+    math: "y := Z⟨2⟩"
+  - id: h3
+    page: 1
+    at: [54, 472]
+    text: "{style=heading1}Cycles"
+  - id: t3
+    page: 1
+    at: [54, 498]
+    text:
+      width: full
+      text: The predators peak just after the prey. In the phase plane every orbit is closed around the equilibrium, where both populations stay constant.
+  - id: xs
+    page: 1
+    at: [54, 534]
+    math: "x_e := γ/δ"
+  - id: xsv
+    page: 1
+    at: [150, 534]
+    math: "x_e = "
+  - id: ys
+    page: 1
+    at: [260, 534]
+    math: "y_e := α/β"
+  - id: ysv
+    page: 1
+    at: [356, 534]
+    math: "y_e = "
+  - id: p1
+    page: 1
+    at: [54, 570]
+    plot:
+      version: 1
+      type: xy
+      size: [238, 150]
+      axes:
+        x: {title: "Time"}
+        y: {title: "Population"}
+      traces:
+        - {id: prey, x: "t", y: "x", show_in_legend: true, legend_label: "prey", line: {color: "#01B5AF"}}
+        - {id: pred, x: "t", y: "y", show_in_legend: true, legend_label: "predators", line: {color: "#C0392B"}}
+  - id: p2
+    page: 1
+    at: [303, 570]
+    plot:
+      version: 1
+      type: xy
+      size: [238, 150]
+      axes:
+        x: {title: "Prey"}
+        y: {title: "Predators"}
+      traces:
+        - {id: orbit, x: "x", y: "y", show_in_legend: false, line: {color: "#00428D"}}
+      reference_lines:
+        - {id: xe, axis: "x", value: 4, line: {style: dash, color: "#8A97A6"}}
+        - {id: ye, axis: "y", value: 2.75, line: {style: dash, color: "#8A97A6"}}
+  - id: t4
+    page: 1
+    at: [54, 728]
+    text:
+      width: full
+      text: Along each orbit the quantity $V$ stays constant; its drift over the whole run measures the solver's error.
+  - id: V
+    page: 1
+    at: [54, 762]
+    math: "V := \\vec(δ·x − γ·ln(x) + β·y − α·ln(y))"
+  - id: Vd
+    page: 1
+    at: [300, 762]
+    math: "max(V) − min(V) = "

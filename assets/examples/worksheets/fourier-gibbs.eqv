@@ -1,0 +1,107 @@
+format: equavela-worksheet/3
+page:
+  size: A4
+  margins: {top: 54, right: 54, bottom: 54, left: 54}
+settings:
+  format.precision: 5
+regions:
+  - id: title
+    page: 1
+    at: [54, 54]
+    text:
+      width: full
+      text: |
+        {style=title}Fourier series and the Gibbs phenomenon
+
+        A square wave of period $2·π$ is approximated by the partial sums of its Fourier series. The sums converge to the wave wherever it is continuous, yet next to each jump they overshoot by a fixed fraction of the jump, however many terms are added: the **Gibbs phenomenon**.
+  - id: h1
+    page: 1
+    at: [54, 182]
+    text: "{style=heading1}The series"
+  - id: t1
+    page: 1
+    at: [54, 208]
+    text:
+      width: full
+      text: The wave is odd, so only sine terms appear. The coefficient of $sin(n·x)$ is one integral over half a period, solved symbolically for an integer $n > 0$.
+  - id: b
+    page: 1
+    at: [54, 236]
+    math: "2/π·∫[x ∈ 0..π] sin(n·x) →[assume, n == integer, n > 0][simplify]"
+  - id: t2
+    page: 1
+    at: [54, 274]
+    text:
+      width: full
+      text: As $(−1)^n$ is $−1$ for odd $n$ and $1$ for even $n$, the coefficient is $4/(π·n)$ for odd $n$ and $0$ for even $n$. The partial sum with the first $N$ odd harmonics is
+  - id: S
+    page: 1
+    at: [54, 318]
+    math: "S(N, x) := 4/π·∑[k ∈ 1..N] sin((2·k − 1)·x)/(2·k − 1)"
+  - id: t3
+    page: 1
+    at: [54, 366]
+    text:
+      width: full
+      text: Two partial sums over one period, against the wave itself. With more terms the sum follows the wave more closely, but the spike next to each jump keeps its height and only gets narrower.
+  - id: x
+    page: 1
+    at: [54, 400]
+    math: "x := 0, 0.004..2·π"
+  - id: plot
+    page: 1
+    at: [54, 422]
+    plot:
+      version: 1
+      type: xy
+      size: [487, 165]
+      axes:
+        y: {title: "Partial sums"}
+      traces:
+        - {id: wave, x: "x", y: "sign(sin(x))", show_in_legend: true, legend_label: "square wave", line: {color: "#1B2A3A", width: 1}}
+        - {id: s3, x: "x", y: "S(3, x)", show_in_legend: true, legend_label: "N = 3", line: {color: "#01B5AF"}}
+        - {id: s25, x: "x", y: "S(25, x)", show_in_legend: true, legend_label: "N = 25", line: {color: "#00428D"}}
+  - id: h2
+    page: 1
+    at: [54, 594]
+    text: "{style=heading1}The overshoot does not vanish"
+  - id: t4
+    page: 1
+    at: [54, 620]
+    text:
+      width: full
+      text: After the jump at the origin, the first maximum of $S(N, x)$ lies at $π/(2·N)$. Its height tends to a constant above $1$, so the sums overshoot by about $9 %$ of the jump from $−1$ to $1$ for every $N$.
+  - id: G
+    page: 1
+    at: [54, 654]
+    math: "G(N) := S(N, π/(2·N))"
+  - id: G10
+    page: 1
+    at: [54, 686]
+    math: "G(10) = "
+  - id: G100
+    page: 1
+    at: [210, 686]
+    math: "G(100) = "
+  - id: G1000
+    page: 1
+    at: [380, 686]
+    math: "G(1000) = "
+  - id: t5
+    page: 1
+    at: [54, 712]
+    text:
+      width: full
+      text: The limit is the sine integral at $π$, scaled by $2/π$; its excess over $1$, taken relative to the jump of $2$, is the Wilbraham–Gibbs constant.
+  - id: lim
+    page: 1
+    at: [54, 748]
+    math: "G_lim := 2/π·∫[t ∈ 0..π] sin(t)/t"
+  - id: limv
+    page: 1
+    at: [260, 748]
+    math: "G_lim = "
+  - id: over
+    page: 1
+    at: [400, 748]
+    math: "(G_lim − 1)/2 = "
