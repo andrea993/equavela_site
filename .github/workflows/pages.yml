@@ -1,0 +1,47 @@
+name: Pages
+
+# The site, with the user manual of the equavela_doc submodule at /manual/. The manual is taken
+# at the head of its main branch on every run, so the daily run publishes its latest version.
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Take the latest manual
+        run: git submodule update --remote equavela_doc
+      - name: Assemble the site
+        run: |
+          mkdir _site
+          cp -r index.html style.css assets CNAME _site/
+          cp -r equavela_doc/site/manual _site/manual
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
