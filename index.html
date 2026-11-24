@@ -30,7 +30,7 @@
     <p class="lead">Definitions, units, symbolic algebra, programs, plots and explanatory text on one live page, with Julia underneath. What you see on screen is exactly what you print.</p>
     <div class="actions">
       <a class="button" href="#examples">See the examples <span aria-hidden="true">↓</span></a>
-      <a class="button ghost" href="https://github.com/andrea993/Equavela/releases">Download for Windows and Linux</a>
+      <a class="button ghost" href="https://github.com/andrea993/Equavela/releases" data-download>Download for Windows and Linux</a>
     </div>
     <p class="note">Free and open source (MPL-2.0) · version 0.1 alpha, under active development.</p>
   </div>
@@ -168,6 +168,34 @@
   <a href="manual/"><img src="assets/manual-window.png" alt="The Equavela manual showing its chapter navigation and search"></a>
 </section>
 </main>
+
+<dialog id="download" class="download" aria-labelledby="download-title" data-paypal="">
+  <form method="dialog" class="download-form">
+    <button type="button" class="download-close" aria-label="Close" data-close>×</button>
+    <h2 id="download-title">Download Equavela</h2>
+    <p>Equavela is free and open source. If it is useful to you, a donation helps its development.</p>
+    <fieldset class="amounts">
+      <legend>Your donation</legend>
+      <label><input type="radio" name="amount" value="5"><span>5 €</span></label>
+      <label><input type="radio" name="amount" value="10"><span>10 €</span></label>
+      <label><input type="radio" name="amount" value="20" checked><span>20 €</span></label>
+      <label><input type="radio" name="amount" value="50"><span>50 €</span></label>
+      <label><input type="radio" name="amount" value="other"><span>Other</span></label>
+    </fieldset>
+    <label class="custom" hidden>
+      <span>Amount in euros</span>
+      <span class="custom-field"><input type="text" inputmode="decimal" autocomplete="off" placeholder="0" aria-describedby="custom-hint"> €</span>
+      <small id="custom-hint">Write 0 to download without donating.</small>
+    </label>
+    <fieldset class="platforms">
+      <legend>Your system</legend>
+      <label><input type="radio" name="platform" value="windows"><span>Windows 10 and 11</span></label>
+      <label><input type="radio" name="platform" value="linux"><span>Linux (.deb: Debian, Ubuntu)</span></label>
+    </fieldset>
+    <button type="submit" class="button download-go">Donate 20 € and download</button>
+    <p class="download-note">The donation opens on PayPal in a new tab; the download starts here. <a href="https://github.com/andrea993/Equavela/releases">All releases and files</a></p>
+  </form>
+</dialog>
 <footer><img src="assets/equavela-mark.svg" alt=""><span>Equavela · Scientific computing workspace</span><a href="https://github.com/andrea993/Equavela">GitHub</a><span>MPL-2.0 · under active development</span></footer>
 <script>
 for (const gallery of document.querySelectorAll('.gallery')) {
@@ -190,6 +218,83 @@ for (const gallery of document.querySelectorAll('.gallery')) {
   gallery.append(bar);
   mark();
 }
+
+// The download dialog: a donation amount (20 € preselected; downloading without a donation means
+// choosing Other and writing 0) and the system, then the installer of the latest release.
+(() => {
+  const dialog = document.getElementById('download');
+  if (!dialog || typeof dialog.showModal !== 'function') return;
+  const form = dialog.querySelector('form');
+  const custom = dialog.querySelector('.custom');
+  const customInput = custom.querySelector('input');
+  const go = dialog.querySelector('.download-go');
+  const paypal = dialog.dataset.paypal;
+  const releases = 'https://github.com/andrea993/Equavela/releases';
+  const linux = /Linux|X11/.test(navigator.userAgent) && !/Android/.test(navigator.userAgent);
+  form.platform.value = linux ? 'linux' : 'windows';
+
+  // The amount in euros, or null while the custom field holds no valid amount.
+  const amount = () => {
+    if (form.amount.value !== 'other') return Number(form.amount.value);
+    const text = customInput.value.trim().replace(',', '.');
+    if (!/^\d+(\.\d{1,2})?$/.test(text)) return null;
+    return Number(text);
+  };
+  const euros = (value) => value.toLocaleString('en', { minimumFractionDigits: Number.isInteger(value) ? 0 : 2, maximumFractionDigits: 2 }) + ' €';
+  const refresh = () => {
+    custom.hidden = form.amount.value !== 'other';
+    const value = amount();
+    go.disabled = value === null;
+    customInput.setAttribute('aria-invalid', String(value === null && customInput.value.trim() !== ''));
+    go.textContent = value === null ? 'Choose an amount' : value === 0 ? 'Download' : 'Donate ' + euros(value) + ' and download';
+  };
+  form.addEventListener('input', refresh);
+  form.addEventListener('change', () => {
+    refresh();
+    if (form.amount.value === 'other' && document.activeElement?.name === 'amount') customInput.focus();
+  });
+
+  // The installer of the latest release (a pre-release too) that has one for the system.
+  let latest = null;
+  const installer = async (platform) => {
+    latest ??= fetch('https://api.github.com/repos/andrea993/Equavela/releases?per_page=10')
+      .then((response) => (response.ok ? response.json() : []))
+      .catch(() => []);
+    const suffix = platform === 'linux' ? '.deb' : '-setup.exe';
+    for (const release of await latest) {
+      if (release.draft) continue;
+      const asset = (release.assets || []).find((item) => item.name.endsWith(suffix));
+      if (asset) return asset.browser_download_url;
+    }
+    return null;
+  };
+
+  for (const link of document.querySelectorAll('[data-download]')) {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      refresh();
+      dialog.showModal();
+      installer(form.platform.value);
+    });
+  }
+  dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const value = amount();
+    if (value === null) return;
+    // The donation tab opens inside the click, so the browser does not block it.
+    if (value > 0 && paypal) {
+      const url = new URL('https://www.paypal.com/donate/');
+      url.search = new URLSearchParams({ business: paypal, amount: value.toFixed(2), currency_code: 'EUR', item_name: 'Equavela' }).toString();
+      window.open(url, '_blank', 'noopener');
+    }
+    const file = await installer(form.platform.value);
+    dialog.close();
+    window.location.href = file || releases;
+  });
+})();
 </script>
 </body>
 </html>
