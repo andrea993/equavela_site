@@ -30,9 +30,21 @@ jobs:
       - name: Assemble the site
         run: |
           mkdir _site
-          cp -r index.html style.css assets CNAME _site/
+          cp -r index.html style.css assets CNAME favicon.ico apple-touch-icon.png site.webmanifest robots.txt _site/
           cp -r equavela_doc/site/manual _site/manual
           touch _site/.nojekyll
+      - name: Write the sitemap
+        run: |
+          cd _site
+          {
+            echo '<?xml version="1.0" encoding="UTF-8"?>'
+            echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+            echo '  <url><loc>https://equavela.org/</loc></url>'
+            find manual -name '*.html' | sort | sed 's|/index.html$|/|' | while read -r page; do
+              echo "  <url><loc>https://equavela.org/$page</loc></url>"
+            done
+            echo '</urlset>'
+          } > sitemap.xml
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
